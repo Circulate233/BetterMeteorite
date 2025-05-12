@@ -13,8 +13,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @Mod(modid = BeeterMeteorite.MOD_ID, name = Tags.MOD_NAME, version = Tags.VERSION,
-        dependencies = "required:mixinbooter@[8.0,);" +
-                       "required:appliedenergistics2@[v0.56.7,);"
+        dependencies = "required-after:mixinbooter@[8.0,);" +
+                       "required-after:appliedenergistics2@[v0.56.7,);"
 )
 public class BeeterMeteorite {
 
@@ -34,8 +34,6 @@ public class BeeterMeteorite {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-
-        int start = 0;
         proxy.preInit();
     }
 

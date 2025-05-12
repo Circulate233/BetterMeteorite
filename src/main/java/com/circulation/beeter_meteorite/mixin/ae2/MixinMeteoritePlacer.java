@@ -35,11 +35,18 @@ public abstract class MixinMeteoritePlacer {
     private static int randomComplement$sumWeight = 0;
 
     @Shadow
-    protected abstract void placeMeteoriteSkyStone(IMeteoriteWorld w, int x, int y, int z, Block block);
-
-    @Shadow
     @Final
     private MeteoriteBlockPutter putter;
+
+    @Shadow @Final private IBlockDefinition skyChestDefinition;
+
+    @Shadow @Final private static double PRESSES_SPAWN_CHANCE;
+
+    @Shadow @Final private static int SKYSTONE_SPAWN_LIMIT;
+
+    @Shadow private double squaredMeteoriteSize;
+
+    @Shadow protected abstract void placeMeteoriteSkyStone(IMeteoriteWorld w, int x, int y, int z, Block block);
 
     @Inject(method = "placeMeteorite",at = @At("HEAD"),cancellable = true)
     private void placeMeteoriteMixin(IMeteoriteWorld w, int x, int y, int z, CallbackInfo ci) {
@@ -49,7 +56,7 @@ public abstract class MixinMeteoritePlacer {
         this.skyStoneDefinition.maybeBlock().ifPresent(block -> this.placeMeteoriteSkyStone(w, x, y, z, block));
         if (randomComplement$skyStoneReward != null && AEConfig.instance().isFeatureEnabled(AEFeature.SPAWN_PRESSES_IN_METEORITES)) {
             IBlockState block = Blocks.STONE.getDefaultState();
-            int r = w.getWorld().rand.nextInt(randomComplement$sumWeight);
+            int r = w.getWorld().rand.nextInt(randomComplement$sumWeight + 1);
 
             for (Map.Entry<IBlockState, Integer> reward : randomComplement$skyStoneReward.entrySet()) {
                 var iBlock = reward.getKey();

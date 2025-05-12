@@ -9,12 +9,6 @@ public class ClientProxy extends CommonProxy {
 
     public ClientProxy() {
     }
-
-    @Override
-    public void construction() {
-        super.construction();
-    }
-
     @Override
     public void preInit() {
         super.preInit();

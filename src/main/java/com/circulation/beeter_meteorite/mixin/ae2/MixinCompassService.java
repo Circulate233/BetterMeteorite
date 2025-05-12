@@ -6,6 +6,7 @@ import com.circulation.beeter_meteorite.BMConfig;
 import com.circulation.beeter_meteorite.util.Function;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import org.spongepowered.asm.mixin.Final;
@@ -38,22 +39,12 @@ public class MixinCompassService {
     private ExecutorService executor;
 
     @Unique
-    private static final Constructor<?> randomComplement$constructor;
+    private static Constructor<?> randomComplement$constructor;
 
     @Unique
-    private static List<Block> randomComplement$MeteoriteCompassTarget = new ArrayList<>();
+    private static List<ResourceLocation> randomComplement$MeteoriteCompassTarget = new ArrayList<>();
     @Unique
     private static final List<Integer> randomComplement$meta = new ArrayList<>();
-
-    static {
-        try {
-            Class<?> clazz = Class.forName("appeng.services.CompassService$CMUpdatePost");
-            randomComplement$constructor = clazz.getDeclaredConstructor(World.class,int.class,int.class,int.class,boolean.class);
-        } catch (NoSuchMethodException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        randomComplement$constructor.setAccessible(true);
-    }
 
     @Inject(method = "updateArea(Lnet/minecraft/world/World;III)Ljava/util/concurrent/Future;",at = @At("HEAD"), cancellable = true)
     public void updateAreaMixin(World w, int x, int y, int z, CallbackInfoReturnable<Future<?>> cir) throws InvocationTargetException, InstantiationException, IllegalAccessException {
@@ -66,12 +57,22 @@ public class MixinCompassService {
 
         final Chunk c = w.getChunk(cx, cz);
 
+        if (randomComplement$constructor == null){
+            try {
+                Class<?> clazz = Class.forName("appeng.services.CompassService$CMUpdatePost");
+                randomComplement$constructor = clazz.getDeclaredConstructor(CompassService.class,World.class,int.class,int.class,int.class,boolean.class);
+            } catch (NoSuchMethodException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            randomComplement$constructor.setAccessible(true);
+        }
+
         if (randomComplement$MeteoriteCompassTarget.isEmpty()){
             if (BMConfig.MeteoriteCompassTarget.length != 0) {
                 for (String s : BMConfig.MeteoriteCompassTarget) {
                     var block = Function.getBlockFromName(s);
                     if (block == null)continue;
-                    randomComplement$MeteoriteCompassTarget.add(block.getBlock());
+                    randomComplement$MeteoriteCompassTarget.add(block.getBlock().getRegistryName());
                     randomComplement$meta.add(block.getBlock().getMetaFromState(block));
                 }
             } else {
@@ -87,8 +88,8 @@ public class MixinCompassService {
                         final Block blk = state.getBlock();
                         int meta = blk.getMetaFromState(state);
                         for (int i1 = 0; i1 < randomComplement$MeteoriteCompassTarget.size(); i1++) {
-                            if (blk == randomComplement$MeteoriteCompassTarget.get(i1) && meta == randomComplement$meta.get(i1)) {
-                                cir.setReturnValue(this.executor.submit((Runnable) randomComplement$constructor.newInstance(w, cx, cz, cdy, true)));
+                            if (blk.getRegistryName() == randomComplement$MeteoriteCompassTarget.get(i1) && meta == randomComplement$meta.get(i1)) {
+                                cir.setReturnValue(this.executor.submit((Runnable) randomComplement$constructor.newInstance(this,w, cx, cz, cdy, true)));
                                 return;
                             }
                         }
@@ -97,6 +98,6 @@ public class MixinCompassService {
             }
         }
 
-        cir.setReturnValue(this.executor.submit((Runnable) randomComplement$constructor.newInstance(w, cx, cz, cdy, false)));
+        cir.setReturnValue(this.executor.submit((Runnable) randomComplement$constructor.newInstance(this,w, cx, cz, cdy, false)));
     }
 }
