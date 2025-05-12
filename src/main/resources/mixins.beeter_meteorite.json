@@ -1,0 +1,13 @@
+{
+  "package": "com.circulation.beeter_meteorite.mixin.ae2",
+  "refmap": "mixins.ae2wut.refmap.json",
+  "target": "@env(DEFAULT)",
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_8",
+  "client": [
+  ],
+  "mixins": [
+    "MixinCompassService",
+    "MixinMeteoritePlacer"
+  ]
+}
