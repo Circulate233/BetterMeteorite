@@ -8,6 +8,8 @@
   ],
   "mixins": [
     "MixinCompassService",
-    "MixinMeteoritePlacer"
+    "MixinMeteoritePlacer",
+    "MixinMeteoriteSpawn",
+    "MixinMeteoriteWorldGen"
   ]
 }

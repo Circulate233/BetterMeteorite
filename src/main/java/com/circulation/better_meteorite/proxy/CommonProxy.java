@@ -17,10 +17,13 @@ public class CommonProxy {
     public CommonProxy() {
     }
 
+    public boolean canSkyStone = true;
+
     @SubscribeEvent
     public void registerBlocks(RegistryEvent.Register<Block> event) {
         event.getRegistry().register(BlockMysteriousCube.mysteriousCube);
     }
+
     @SubscribeEvent
     public void registerItems(RegistryEvent.Register<Item> event) {
         BlockMysteriousCube.mysteriousCubeItem = new ItemBlock(BlockMysteriousCube.mysteriousCube);
