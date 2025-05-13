@@ -1,9 +1,8 @@
 # BetterMeteorite (1.12)
 
-## About
-This mod attempts to modify the meteorite generation mechanics in [AE2UEL](https://github.com/AE2-UEL/Applied-Energistics-2) by replacing the "sky stone chest" block with other block types and expanding the Meteorite Compass's functionality to point to additional block types.
+This mod modifies the meteorite generation mechanism in AE2UEL, allowing for the replacement of the outer and core blocks of meteorites (outer sky stone and inner sky stone chest), and allowing for the customization of the blocks pointed to by the meteorite compass. You can modify these settings in the configuration file.
 
-You can modify these settings in the configuration file. By default, it will generate the "Mysterious Cube" which is ported from Minecraft 1.18+ AE2.
+By default, it will replace the core blocks with mysterious blocks ported from Minecraft 1.18+AE2.
 
 * Textures and Models
     - (c) 2020, [Ridanisaurus Rid](https://github.com/Ridanisaurus/), (c) 2013 - 2020 AlgorithmX2 et al
