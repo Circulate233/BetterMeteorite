@@ -1,8 +1,8 @@
-package com.circulation.beeter_meteorite.proxy;
+package com.circulation.better_meteorite.proxy;
 
 import appeng.core.CreativeTab;
-import com.circulation.beeter_meteorite.BeeterMeteorite;
-import com.circulation.beeter_meteorite.BlockMysteriousCube;
+import com.circulation.better_meteorite.BetterMeteorite;
+import com.circulation.better_meteorite.BlockMysteriousCube;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -24,8 +24,8 @@ public class CommonProxy {
     @SubscribeEvent
     public void registerItems(RegistryEvent.Register<Item> event) {
         BlockMysteriousCube.mysteriousCubeItem = new ItemBlock(BlockMysteriousCube.mysteriousCube);
-        BlockMysteriousCube.mysteriousCubeItem.setRegistryName(new ResourceLocation(BeeterMeteorite.MOD_ID, "mysterious_cube"));
-        BlockMysteriousCube.mysteriousCubeItem.setTranslationKey(BeeterMeteorite.MOD_ID + '.' + "mysterious_cube");
+        BlockMysteriousCube.mysteriousCubeItem.setRegistryName(new ResourceLocation(BetterMeteorite.MOD_ID, "mysterious_cube"));
+        BlockMysteriousCube.mysteriousCubeItem.setTranslationKey(BetterMeteorite.MOD_ID + '.' + "mysterious_cube");
         BlockMysteriousCube.mysteriousCubeItem.setCreativeTab(CreativeTab.instance);
         event.getRegistry().register(BlockMysteriousCube.mysteriousCubeItem);
     }

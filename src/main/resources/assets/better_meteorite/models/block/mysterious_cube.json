@@ -1,12 +1,12 @@
 {
   "credit": "Made with Blockbench by Sea_Kerman",
   "textures": {
-    "end_e": "beeter_meteorite:blocks/mysterious_cube_end_emissive",
-    "sides_e": "beeter_meteorite:blocks/mysterious_cube_sides_emissive",
-    "particle": "beeter_meteorite:blocks/mysterious_cube_core",
-    "core": "beeter_meteorite:blocks/mysterious_cube_core",
-    "sides": "beeter_meteorite:blocks/mysterious_cube_sides",
-    "end": "beeter_meteorite:blocks/mysterious_cube_end"
+    "end_e": "better_meteorite:blocks/mysterious_cube_end_emissive",
+    "sides_e": "better_meteorite:blocks/mysterious_cube_sides_emissive",
+    "particle": "better_meteorite:blocks/mysterious_cube_core",
+    "core": "better_meteorite:blocks/mysterious_cube_core",
+    "sides": "better_meteorite:blocks/mysterious_cube_sides",
+    "end": "better_meteorite:blocks/mysterious_cube_end"
   },
   "elements": [
     {

@@ -1,6 +1,6 @@
-package com.circulation.beeter_meteorite;
+package com.circulation.better_meteorite;
 
-import com.circulation.beeter_meteorite.proxy.CommonProxy;
+import com.circulation.better_meteorite.proxy.CommonProxy;
 import net.minecraft.launchwrapper.LogWrapper;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -12,14 +12,14 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = BeeterMeteorite.MOD_ID, name = Tags.MOD_NAME, version = Tags.VERSION,
+@Mod(modid = BetterMeteorite.MOD_ID, name = Tags.MOD_NAME, version = Tags.VERSION,
         dependencies = "required-after:mixinbooter@[8.0,);" +
                        "required-after:appliedenergistics2@[v0.56.7,);"
 )
-public class BeeterMeteorite {
-    public static final String MOD_ID = "beeter_meteorite";
-    public static final String CLIENT_PROXY = "com.circulation.beeter_meteorite.proxy.ClientProxy";
-    public static final String COMMON_PROXY = "com.circulation.beeter_meteorite.proxy.CommonProxy";
+public class BetterMeteorite {
+    public static final String MOD_ID = "better_meteorite";
+    public static final String CLIENT_PROXY = "com.circulation.better_meteorite.proxy.ClientProxy";
+    public static final String COMMON_PROXY = "com.circulation.better_meteorite.proxy.CommonProxy";
 
     public static final SimpleNetworkWrapper NET_CHANNEL = NetworkRegistry.INSTANCE.newSimpleChannel(MOD_ID);
 
@@ -28,7 +28,7 @@ public class BeeterMeteorite {
     public static CommonProxy proxy = null;
 
     @Mod.Instance(MOD_ID)
-    public static BeeterMeteorite instance = null;
+    public static BetterMeteorite instance = null;
     public static LogWrapper logger;
 
     @Mod.EventHandler

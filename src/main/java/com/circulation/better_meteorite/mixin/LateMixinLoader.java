@@ -1,4 +1,4 @@
-package com.circulation.beeter_meteorite.mixin;
+package com.circulation.better_meteorite.mixin;
 
 import net.minecraftforge.fml.common.Loader;
 import org.apache.logging.log4j.LogManager;
@@ -11,12 +11,12 @@ import java.util.function.BooleanSupplier;
 @SuppressWarnings({"unused", "SameParameterValue"})
 public class LateMixinLoader implements ILateMixinLoader {
 
-    public static final Logger LOG = LogManager.getLogger("BeeterMeteorite_PRE");
-    public static final String LOG_PREFIX = "[BeeterMeteorite]" + ' ';
+    public static final Logger LOG = LogManager.getLogger("BetterMeteorite_PRE");
+    public static final String LOG_PREFIX = "[BetterMeteorite]" + ' ';
     private static final Map<String, BooleanSupplier> MIXIN_CONFIGS = new LinkedHashMap<>();
 
     static {
-        addMixinCFG("mixins.beeter_meteorite.json");
+        addMixinCFG("mixins.better_meteorite.json");
     }
 
     @Override

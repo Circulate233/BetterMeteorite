@@ -1,4 +1,4 @@
-package com.circulation.beeter_meteorite.util;
+package com.circulation.better_meteorite.util;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;

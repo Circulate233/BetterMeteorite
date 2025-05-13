@@ -1,6 +1,6 @@
-package com.circulation.beeter_meteorite.proxy;
+package com.circulation.better_meteorite.proxy;
 
-import com.circulation.beeter_meteorite.BlockMysteriousCube;
+import com.circulation.better_meteorite.BlockMysteriousCube;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.util.ResourceLocation;

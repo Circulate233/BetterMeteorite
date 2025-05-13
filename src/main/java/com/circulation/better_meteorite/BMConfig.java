@@ -1,18 +1,18 @@
-package com.circulation.beeter_meteorite;
+package com.circulation.better_meteorite;
 
 import net.minecraftforge.common.config.Config;
 
-@Config(modid = BeeterMeteorite.MOD_ID)
+@Config(modid = BetterMeteorite.MOD_ID)
 public class BMConfig {
     @Config.Comment({"Give the meteorite compass a new target"})
     @Config.Name("MeteoriteCompassTarget")
     @Config.RequiresMcRestart
-    public static String[] MeteoriteCompassTarget = {BeeterMeteorite.MOD_ID + ":mysterious_cube:0"};
+    public static String[] MeteoriteCompassTarget = {BetterMeteorite.MOD_ID + ":mysterious_cube:0"};
 
     @Config.Comment({"Replace the Sky Stone Chest,modid:id:meta"})
     @Config.Name("skyStoneReward")
     @Config.RequiresMcRestart
-    public static String[] skyStoneReward = {BeeterMeteorite.MOD_ID + ":mysterious_cube:0"};
+    public static String[] skyStoneReward = {BetterMeteorite.MOD_ID + ":mysterious_cube:0"};
 
     @Config.Comment({"Each entry in skyStoneReward corresponds to a weight value. If unspecified, the default is 1."})
     @Config.Name("skyStoneRewardWeight")

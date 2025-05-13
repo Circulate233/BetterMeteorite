@@ -1,4 +1,4 @@
-# BeeterMeteorite (1.12)
+# BetterMeteorite (1.12)
 
 ## About
 This mod attempts to modify the meteorite generation mechanics in [AE2UEL](https://github.com/AE2-UEL/Applied-Energistics-2) by replacing the "sky stone chest" block with other block types and expanding the Meteorite Compass's functionality to point to additional block types.

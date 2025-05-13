@@ -1,4 +1,4 @@
-package com.circulation.beeter_meteorite.mixin.ae2;
+package com.circulation.better_meteorite.mixin.ae2;
 
 import appeng.api.definitions.IBlockDefinition;
 import appeng.core.AEConfig;
@@ -6,8 +6,8 @@ import appeng.core.features.AEFeature;
 import appeng.worldgen.MeteoritePlacer;
 import appeng.worldgen.meteorite.IMeteoriteWorld;
 import appeng.worldgen.meteorite.MeteoriteBlockPutter;
-import com.circulation.beeter_meteorite.BMConfig;
-import com.circulation.beeter_meteorite.util.Function;
+import com.circulation.better_meteorite.BMConfig;
+import com.circulation.better_meteorite.util.Function;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;

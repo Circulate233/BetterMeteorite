@@ -1,4 +1,4 @@
-package com.circulation.beeter_meteorite;
+package com.circulation.better_meteorite;
 
 import appeng.api.AEApi;
 import appeng.api.definitions.IMaterials;
@@ -29,8 +29,8 @@ public class BlockMysteriousCube extends Block {
         this.setResistance(10.0F);
         this.setHardness(10);
         this.setCreativeTab(CreativeTab.BUILDING_BLOCKS);
-        this.setRegistryName(new ResourceLocation(BeeterMeteorite.MOD_ID, "mysterious_cube"));
-        this.setTranslationKey(BeeterMeteorite.MOD_ID + '.' + "mysterious_cube");
+        this.setRegistryName(new ResourceLocation(BetterMeteorite.MOD_ID, "mysterious_cube"));
+        this.setTranslationKey(BetterMeteorite.MOD_ID + '.' + "mysterious_cube");
     }
 
     @Override

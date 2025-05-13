@@ -1,9 +1,9 @@
-package com.circulation.beeter_meteorite.mixin.ae2;
+package com.circulation.better_meteorite.mixin.ae2;
 
 import appeng.services.CompassService;
 import appeng.services.compass.CompassReader;
-import com.circulation.beeter_meteorite.BMConfig;
-import com.circulation.beeter_meteorite.util.Function;
+import com.circulation.better_meteorite.BMConfig;
+import com.circulation.better_meteorite.util.Function;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
