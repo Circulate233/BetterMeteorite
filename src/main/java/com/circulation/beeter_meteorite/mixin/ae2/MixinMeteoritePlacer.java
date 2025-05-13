@@ -17,8 +17,10 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,35 +32,66 @@ public abstract class MixinMeteoritePlacer {
     private IBlockDefinition skyStoneDefinition;
 
     @Unique
-    private static Map<IBlockState,Integer> randomComplement$skyStoneReward = new HashMap<>();
+    private static Map<IBlockState,Integer> betterMeteorite$skyStoneReward = new HashMap<>();
     @Unique
-    private static int randomComplement$sumWeight = 0;
+    private static Map<IBlockState,Integer> betterMeteorite$skyStone = new HashMap<>();
+    @Unique
+    private static int betterMeteorite$sumWeight = 0;
+    @Unique
+    private IBlockState betterMeteorite$skyStoneInstance;
 
     @Shadow
     @Final
     private MeteoriteBlockPutter putter;
 
-    @Shadow @Final private IBlockDefinition skyChestDefinition;
+    @Shadow
+    protected abstract void placeMeteoriteSkyStone(IMeteoriteWorld w, int x, int y, int z, Block block);
 
-    @Shadow @Final private static double PRESSES_SPAWN_CHANCE;
+    @Shadow
+    @Final
+    private Collection<Block> invalidSpawn;
 
-    @Shadow @Final private static int SKYSTONE_SPAWN_LIMIT;
-
-    @Shadow private double squaredMeteoriteSize;
-
-    @Shadow protected abstract void placeMeteoriteSkyStone(IMeteoriteWorld w, int x, int y, int z, Block block);
+    @Redirect(method = "placeMeteoriteSkyStone",at = @At(value = "INVOKE", target = "Lappeng/worldgen/meteorite/MeteoriteBlockPutter;put(Lappeng/worldgen/meteorite/IMeteoriteWorld;IIILnet/minecraft/block/Block;)Z"))
+    protected boolean putMixin(MeteoriteBlockPutter instance, IMeteoriteWorld w, int i, int j, int k, Block blk){
+        if (betterMeteorite$skyStone != null && this.betterMeteorite$skyStoneInstance != null){
+            Block original = w.getBlock(i, j, k);
+            if (original != Blocks.BEDROCK && original != blk) {
+                w.setBlock(i, j, k, this.betterMeteorite$skyStoneInstance, 3);
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return instance.put(w, i, j, k, blk);
+        }
+    }
 
     @Inject(method = "placeMeteorite",at = @At("HEAD"),cancellable = true)
     private void placeMeteoriteMixin(IMeteoriteWorld w, int x, int y, int z, CallbackInfo ci) {
-        if (randomComplement$skyStoneReward != null && randomComplement$skyStoneReward.isEmpty()) {
-            randomComplement$initReward();
+        if (betterMeteorite$skyStoneReward != null && betterMeteorite$skyStoneReward.isEmpty()) {
+            betterMeteorite$initReward();
         }
-        this.skyStoneDefinition.maybeBlock().ifPresent(block -> this.placeMeteoriteSkyStone(w, x, y, z, block));
-        if (randomComplement$skyStoneReward != null && AEConfig.instance().isFeatureEnabled(AEFeature.SPAWN_PRESSES_IN_METEORITES)) {
-            IBlockState block = Blocks.STONE.getDefaultState();
-            int r = w.getWorld().rand.nextInt(randomComplement$sumWeight + 1);
 
-            for (Map.Entry<IBlockState, Integer> reward : randomComplement$skyStoneReward.entrySet()) {
+        if (betterMeteorite$skyStone != null) {
+            int r = w.getWorld().rand.nextInt(betterMeteorite$sumWeight + 1);
+            for (Map.Entry<IBlockState, Integer> reward : betterMeteorite$skyStone.entrySet()) {
+                var iBlock = reward.getKey();
+                var weight = reward.getValue();
+                r -= weight;
+                if (r <= 0) {
+                    this.betterMeteorite$skyStoneInstance = iBlock;
+                    break;
+                }
+            }
+        }
+
+        this.skyStoneDefinition.maybeBlock().ifPresent(block -> this.placeMeteoriteSkyStone(w, x, y, z, block));
+
+        if (betterMeteorite$skyStoneReward != null && AEConfig.instance().isFeatureEnabled(AEFeature.SPAWN_PRESSES_IN_METEORITES)) {
+            IBlockState block = Blocks.STONE.getDefaultState();
+            int r = w.getWorld().rand.nextInt(betterMeteorite$sumWeight + 1);
+
+            for (Map.Entry<IBlockState, Integer> reward : betterMeteorite$skyStoneReward.entrySet()) {
                 var iBlock = reward.getKey();
                 var weight = reward.getValue();
                 r -= weight;
@@ -74,10 +107,10 @@ public abstract class MixinMeteoritePlacer {
     }
 
     @Unique
-    private void randomComplement$initReward(){
+    private void betterMeteorite$initReward(){
         String[] skyStoneReward = BMConfig.skyStoneReward;
         if (skyStoneReward.length == 0) {
-            randomComplement$skyStoneReward = null;
+            betterMeteorite$skyStoneReward = null;
             return;
         }
         int[] sourceWeights = BMConfig.skyStoneRewardWeight;
@@ -97,10 +130,38 @@ public abstract class MixinMeteoritePlacer {
             IBlockState block = Function.getBlockFromName(blockName);
             if (block == null)continue;
             int weight = skyStoneRewardWeight[i];
-            randomComplement$skyStoneReward.put(block,weight);
-            randomComplement$sumWeight += weight;
+            betterMeteorite$skyStoneReward.put(block,weight);
+            betterMeteorite$sumWeight += weight;
         }
-        if (randomComplement$skyStoneReward.isEmpty())randomComplement$skyStoneReward = null;
+        if (betterMeteorite$skyStoneReward.isEmpty())betterMeteorite$skyStoneReward = null;
+
+        String[] skyStone = BMConfig.skyStone;
+        if (skyStone.length == 0) {
+            betterMeteorite$skyStone = null;
+            return;
+        }
+        int[] sourceStoneWeights = BMConfig.skyStoneWeight;
+        int[] skyStoneWeight = new int[skyStone.length];
+
+        if (sourceWeights.length < skyStone.length) {
+            System.arraycopy(sourceWeights, 0, skyStoneWeight, 0, sourceWeights.length);
+            for (int i = sourceWeights.length; i < skyStoneWeight.length; i++) {
+                skyStoneWeight[i] = 1;
+            }
+        } else {
+            skyStoneWeight = sourceWeights;
+        }
+
+        for (int i = 0; i < skyStone.length; i++) {
+            String blockName = skyStone[i];
+            IBlockState block = Function.getBlockFromName(blockName);
+            if (block == null)continue;
+            int weight = skyStoneWeight[i];
+            betterMeteorite$skyStone.put(block,weight);
+            betterMeteorite$sumWeight += weight;
+            this.invalidSpawn.add(block.getBlock());
+        }
+        if (betterMeteorite$skyStone.isEmpty())betterMeteorite$skyStone = null;
     }
 
 }

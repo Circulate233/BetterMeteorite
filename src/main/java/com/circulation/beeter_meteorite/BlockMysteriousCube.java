@@ -14,11 +14,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class BlockMysteriousCube extends Block {
 
     public static BlockMysteriousCube mysteriousCube = new BlockMysteriousCube();
     public static ItemBlock mysteriousCubeItem;
-    public static IMaterials aeItems = AEApi.instance().definitions().materials();
+    public static final Set<ItemStack> press = new HashSet<>();
+    public static final IMaterials aeItems = AEApi.instance().definitions().materials();
 
     public BlockMysteriousCube() {
         super(Material.ROCK);
@@ -30,12 +34,14 @@ public class BlockMysteriousCube extends Block {
     }
 
     @Override
-    public void getDrops(@NotNull NonNullList<ItemStack> drops, @NotNull IBlockAccess world, @NotNull BlockPos pos, @NotNull IBlockState state, int fortune)
-    {
-        aeItems.calcProcessorPress().maybeStack(1).ifPresent(drops::add);
-        aeItems.engProcessorPress().maybeStack(1).ifPresent(drops::add);
-        aeItems.logicProcessorPress().maybeStack(1).ifPresent(drops::add);
-        aeItems.siliconPress().maybeStack(1).ifPresent(drops::add);
+    public void getDrops(@NotNull NonNullList<ItemStack> drops, @NotNull IBlockAccess world, @NotNull BlockPos pos, @NotNull IBlockState state, int fortune) {
+        if (press.isEmpty()) {
+            aeItems.calcProcessorPress().maybeStack(1).ifPresent(press::add);
+            aeItems.engProcessorPress().maybeStack(1).ifPresent(press::add);
+            aeItems.logicProcessorPress().maybeStack(1).ifPresent(press::add);
+            aeItems.siliconPress().maybeStack(1).ifPresent(press::add);
+        }
+        drops.addAll(press);
     }
 
 }

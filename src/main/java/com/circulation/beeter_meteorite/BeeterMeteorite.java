@@ -17,7 +17,6 @@ import org.apache.logging.log4j.Logger;
                        "required-after:appliedenergistics2@[v0.56.7,);"
 )
 public class BeeterMeteorite {
-
     public static final String MOD_ID = "beeter_meteorite";
     public static final String CLIENT_PROXY = "com.circulation.beeter_meteorite.proxy.ClientProxy";
     public static final String COMMON_PROXY = "com.circulation.beeter_meteorite.proxy.CommonProxy";
