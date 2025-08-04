@@ -8,6 +8,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -25,10 +26,10 @@ public class BlockMysteriousCube extends Block {
     public static final IMaterials aeItems = AEApi.instance().definitions().materials();
 
     public BlockMysteriousCube() {
-        super(Material.ROCK);
-        this.setResistance(10.0F);
+        super(Material.IRON);
+        this.setResistance(1000);
         this.setHardness(10);
-        this.setCreativeTab(CreativeTab.BUILDING_BLOCKS);
+        this.setCreativeTab(CreativeTab.instance);
         this.setRegistryName(new ResourceLocation(BetterMeteorite.MOD_ID, "mysterious_cube"));
         this.setTranslationKey(BetterMeteorite.MOD_ID + '.' + "mysterious_cube");
     }
@@ -42,6 +43,11 @@ public class BlockMysteriousCube extends Block {
             aeItems.siliconPress().maybeStack(1).ifPresent(press::add);
         }
         drops.addAll(press);
+    }
+
+    @Override
+    public @NotNull BlockRenderLayer getRenderLayer() {
+        return BlockRenderLayer.CUTOUT;
     }
 
 }
